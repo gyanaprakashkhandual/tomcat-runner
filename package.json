@@ -2,11 +2,12 @@
   "name": "tomcat-runner",
   "displayName": "Tomcat Runner",
   "description": "Run, manage, and deploy Spring Boot / Java / Maven projects on Apache Tomcat — directly from VS Code.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "gyanaprakashkhandual",
   "engines": {
     "vscode": "^1.80.0"
   },
+  "icon": "./icon.png",
   "categories": [
     "Other",
     "Debuggers"
