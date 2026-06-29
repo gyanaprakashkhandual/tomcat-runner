@@ -8,4 +8,3 @@ tsconfig.json
 **/*.ts
 !out/**/*.d.ts
 node_modules/**
-STRUCTURE.md

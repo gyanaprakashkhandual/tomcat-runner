@@ -1,0 +1,6 @@
+{
+  "spec": "out/test/suite/**/*.test.js",
+  "require": ["out/test/mocks/registerMock.js"],
+  "timeout": 5000,
+  "color": true
+}

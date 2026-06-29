@@ -1,1 +1,27 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Compiled output
+out/
+*.vsix
+
+# TypeScript build info
+*.tsbuildinfo
+
+# VS Code test run artifacts
+.vscode-test/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor settings (keep shared, ignore personal overrides)
+.vscode/*
+!.vscode/extensions.json
+
+# Environment files
+.env
