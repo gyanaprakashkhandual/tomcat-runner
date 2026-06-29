@@ -1,0 +1,222 @@
+{
+  "name": "tomcat-runner",
+  "displayName": "Tomcat Runner",
+  "description": "Run, manage, and deploy Spring Boot / Java / Maven projects on Apache Tomcat — directly from VS Code.",
+  "version": "1.0.0",
+  "publisher": "Gyana Prakash Khandual",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Debuggers"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "tomcatRunner",
+          "title": "Tomcat Runner",
+          "icon": "resources/icons/tomcat.svg"
+        }
+      ]
+    },
+    "views": {
+      "tomcatRunner": [
+        {
+          "id": "tomcatServers",
+          "name": "Servers",
+          "icon": "resources/icons/tomcat.svg",
+          "contextualTitle": "Tomcat Servers"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "tomcatServers",
+        "contents": "No Tomcat servers configured yet.\n[Add Server](command:tomcatRunner.addServer)\nPoint to your local Apache Tomcat installation folder."
+      }
+    ],
+    "commands": [
+      {
+        "command": "tomcatRunner.addServer",
+        "title": "Add Tomcat Server",
+        "category": "Tomcat",
+        "icon": "$(add)"
+      },
+      {
+        "command": "tomcatRunner.editServer",
+        "title": "Edit Server",
+        "category": "Tomcat",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "tomcatRunner.removeServer",
+        "title": "Remove Server",
+        "category": "Tomcat",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "tomcatRunner.startServer",
+        "title": "Start",
+        "category": "Tomcat",
+        "icon": "$(play)"
+      },
+      {
+        "command": "tomcatRunner.stopServer",
+        "title": "Stop",
+        "category": "Tomcat",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "tomcatRunner.restartServer",
+        "title": "Restart",
+        "category": "Tomcat",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "tomcatRunner.openInBrowser",
+        "title": "Open in Browser",
+        "category": "Tomcat",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "tomcatRunner.viewLogs",
+        "title": "View Logs",
+        "category": "Tomcat",
+        "icon": "$(output)"
+      },
+      {
+        "command": "tomcatRunner.deployProject",
+        "title": "Deploy to Tomcat",
+        "category": "Tomcat",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "tomcatRunner.undeployProject",
+        "title": "Undeploy",
+        "category": "Tomcat",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "tomcatRunner.cleanWebapps",
+        "title": "Clean Webapps Folder",
+        "category": "Tomcat",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "tomcatRunner.refresh",
+        "title": "Refresh",
+        "category": "Tomcat",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "tomcatRunner.addServer",
+          "when": "view == tomcatServers",
+          "group": "navigation@1"
+        },
+        {
+          "command": "tomcatRunner.refresh",
+          "when": "view == tomcatServers",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "tomcatRunner.startServer",
+          "when": "view == tomcatServers && viewItem == server.stopped",
+          "group": "inline@1"
+        },
+        {
+          "command": "tomcatRunner.stopServer",
+          "when": "view == tomcatServers && viewItem == server.running",
+          "group": "inline@1"
+        },
+        {
+          "command": "tomcatRunner.restartServer",
+          "when": "view == tomcatServers && viewItem == server.running",
+          "group": "inline@2"
+        },
+        {
+          "command": "tomcatRunner.openInBrowser",
+          "when": "view == tomcatServers && viewItem == server.running",
+          "group": "inline@3"
+        },
+        {
+          "command": "tomcatRunner.viewLogs",
+          "when": "view == tomcatServers && viewItem =~ /server\\..+/",
+          "group": "1_view@1"
+        },
+        {
+          "command": "tomcatRunner.deployProject",
+          "when": "view == tomcatServers && viewItem =~ /server\\..+/",
+          "group": "2_deploy@1"
+        },
+        {
+          "command": "tomcatRunner.editServer",
+          "when": "view == tomcatServers && viewItem =~ /server\\..+/",
+          "group": "3_config@1"
+        },
+        {
+          "command": "tomcatRunner.removeServer",
+          "when": "view == tomcatServers && viewItem =~ /server\\..+/",
+          "group": "3_config@2"
+        },
+        {
+          "command": "tomcatRunner.undeployProject",
+          "when": "view == tomcatServers && viewItem == app",
+          "group": "inline@1"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "tomcatRunner.deployProject",
+          "when": "resourceFilename == pom.xml || resourceExtname == .war || resourceExtname == .jar",
+          "group": "tomcat@1"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Tomcat Runner",
+      "properties": {
+        "tomcatRunner.javaHome": {
+          "type": "string",
+          "default": "",
+          "description": "Override JAVA_HOME for Tomcat processes. Leave blank to use the system JAVA_HOME."
+        },
+        "tomcatRunner.mavenExecutable": {
+          "type": "string",
+          "default": "mvn",
+          "description": "Path to the Maven executable. Default uses the system PATH."
+        },
+        "tomcatRunner.autoOpenBrowserOnStart": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically open the browser when a server starts."
+        },
+        "tomcatRunner.shutdownTimeoutMs": {
+          "type": "number",
+          "default": 15000,
+          "description": "Timeout (ms) to wait for graceful shutdown before force-killing the process."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.3.0"
+  }
+}
